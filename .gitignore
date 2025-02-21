@@ -130,3 +130,5 @@ dmypy.json
 
 #key telegram
 bot_key.txt
+today.csv
+yesterday.csv
