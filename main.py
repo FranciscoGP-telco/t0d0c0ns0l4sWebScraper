@@ -7,6 +7,7 @@ import requests
 import pandas as pd
 from bs4 import BeautifulSoup
 
+
 def get_list_from_web(page_id):
     """Function to get the all the articles from the page."""
     # initialize an empty list to store the article information
@@ -43,6 +44,7 @@ def get_list_from_web(page_id):
     # return the page_article_list
     return page_article_list
 
+
 def get_last_page_number():
     """Function to get the last page from the website"""
     web_page_numbers = []
@@ -59,20 +61,29 @@ def get_last_page_number():
     web_page_numbers.sort()
     return web_page_numbers[-1]
 
+
 def transform_file():
     """Function to rename the current file before creating a new one"""
+
+    if os.path.isfile("yesterday.csv"):
+        os.remove("yesterday.csv")
     if os.path.isfile("today.csv"):
         os.rename("today.csv", "yesterday.csv")
 
-if __name__ == "__main__":
-    transform_file()
-    PRICE_PATTERN = r"(\d+,\d{2})"
+
+def page_info_to_csv():
+    """Function to loop for all thew pages in the website, store in a DF, and save to csv"""
     article_list = []
     for x in range(get_last_page_number()):
         article_list.extend(get_list_from_web(x))
     df = pd.DataFrame(article_list, columns=["Name", "price", "URL"])
     df[["type", "Name"]] = df["Name"].str.split(n=1, expand=True)
-    df["price"] = df["price"].str.extract(PRICE_PATTERN)
+    df["price"] = df["price"].str.extract(r"(\d+,\d{2})")
     df["price"] = df["price"].str.replace(",", ".")
     df["price"] = df["price"].astype(float)
     df.to_csv("today.csv", sep=";", index=False)
+
+
+if __name__ == "__main__":
+    transform_file()
+    page_info_to_csv()
