@@ -24,12 +24,9 @@ def get_list_from_web(page_id):
     results = soup.find_all("div", {"class": "product-info"})
     # loop through each product info section and extract the title, price, and URL
     for job_element in results:
-        # print(job_element)
         # find the product title and price within the current section
         title = job_element.find("h2", class_="h3 product-title")
         price = job_element.find("span", class_="price")
-        # print the title and price for debugging purposes
-        print(title.text, " - ", price.text)
         # find all the links within the current section
         a_tags = job_element.find_all("a", href=True)
         # loop through each link and check if it is not a placeholder link

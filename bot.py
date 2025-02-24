@@ -5,6 +5,7 @@ related to product changes and wishlist management.
 
 import telebot
 from bot_config import API_TOKEN
+import files_functions
 
 bot = telebot.TeleBot(API_TOKEN)
 
@@ -46,7 +47,13 @@ def reply_all_changes(message):
     Args:
         message (telebot.types.Message): The message object containing the command.
     """
-    bot.reply_to(message, text="List all the changes during today")
+    bot.reply_to(message, text="Here it is the list of all changes:")
+    bot.reply_to(message, text="Added:")
+    bot.reply_to(message, text=files_functions.get_added_products())
+    bot.reply_to(message, text="Removed:")
+    bot.reply_to(message, text=files_functions.get_removed_products())
+    bot.reply_to(message, text="Changed:")
+    bot.reply_to(message, text=files_functions.get_changed_products())
 
 
 @bot.message_handler(regexp="new_products")
@@ -57,7 +64,8 @@ def reply_new_products(message):
     Args:
         message (telebot.types.Message): The message object containing the command.
     """
-    bot.reply_to(message, text="List the new products added today")
+    bot.reply_to(message, text="Here you have the new products added today:")
+    bot.reply_to(message, text=files_functions.get_added_products())
 
 
 @bot.message_handler(regexp="remove_products")
@@ -68,7 +76,8 @@ def reply_remove_products(message):
     Args:
         message (telebot.types.Message): The message object containing the command.
     """
-    bot.reply_to(message, text="List the removed products today")
+    bot.reply_to(message, text="Here you have the removed products for today:")
+    bot.reply_to(message, text=files_functions.get_removed_products())
 
 
 @bot.message_handler(regexp="change_products")
@@ -79,7 +88,8 @@ def reply_change_products(message):
     Args:
         message (telebot.types.Message): The message object containing the command.
     """
-    bot.reply_to(message, text="List the products changed today")
+    bot.reply_to(message, text="List of products changed today:")
+    bot.reply_to(message, text=files_functions.get_changed_products())
 
 
 @bot.message_handler(regexp="add_wishlist")
