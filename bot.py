@@ -22,21 +22,19 @@ def welcome(message):
         bot.send_message(
             message.chat.id, f"Welcome to the bot {message.from_user.first_name}!")
         bot.send_message(message.chat.id, "use the command /help to get help")
-    if message.text == "/help":
+    elif message.text == "/help":
         bot.send_message(
             message.chat.id, "You can use the following commands:")
-        bot.send_message(
-            message.chat.id, "all_changes - List all the changes during today")
-        bot.send_message(
-            message.chat.id, "new_products - List the new products added today")
-        bot.send_message(
-            message.chat.id, "remove_products - List the removed products today")
-        bot.send_message(
-            message.chat.id, "change_products - List the products changed today")
-        bot.send_message(
-            message.chat.id, "add_wishlist - Add a product to the wishlist")
-        bot.send_message(
-            message.chat.id, "remove_wishlist - Remove a product from the wishlist")
+        commands = [
+            "all_changes - List all the changes during today",
+            "new_products - List the new products added today",
+            "remove_products - List the removed products today",
+            "change_products - List the products changed today",
+            "add_wishlist - Add a product to the wishlist",
+            "remove_wishlist - Remove a product from the wishlist"
+        ]
+        for command in commands:
+            bot.send_message(message.chat.id, command)
 
 
 @bot.message_handler(regexp="all_changes")

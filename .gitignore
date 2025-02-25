@@ -130,8 +130,7 @@ dmypy.json
 
 #Files that is not needed to inclide in the project
 bot_key.txt
-today.csv
-yesterday.csv
+*.csv
 
 #Python file with the API key of the bot
 bot_config.py
