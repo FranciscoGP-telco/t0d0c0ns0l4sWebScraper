@@ -4,6 +4,7 @@ related to product changes and wishlist management.
 """
 
 import telebot
+import wishlist
 from bot_config import API_TOKEN
 import files_functions
 
@@ -31,7 +32,8 @@ def welcome(message):
             "remove_products - List the removed products today",
             "change_products - List the products changed today",
             "add_wishlist - Add a product to the wishlist",
-            "remove_wishlist - Remove a product from the wishlist"
+            "remove_wishlist - Remove a product from the wishlist",
+            "reset_wishlist - Remove all products from the wishlist"
         ]
         for command in commands:
             bot.send_message(message.chat.id, command)
@@ -98,6 +100,8 @@ def reply_add_wishlist(message):
     Args:
         message (telebot.types.Message): The message object containing the command.
     """
+
+    wishlist.add_product_to_wishlist(message.text.replace("add_wishlist ", ""))
     bot.reply_to(
         message, text=f"Adding the product {message.text} to the wishlist")
 
@@ -110,8 +114,24 @@ def reply_remove_wishlist(message):
     Args:
         message (telebot.types.Message): The message object containing the command.
     """
+
+    wishlist.remove_product_from_wishlist(
+        message.text.replace("remove_wishlist ", ""))
     bot.reply_to(
         message, text=f"Removing the product {message.text} from the wishlist")
+
+
+@bot.message_handler(regexp="reset_wishlist")
+def reply_reset_wishlist(message):
+    """
+    Removes all products from the wishlist.
+
+    Args:
+        message (telebot.types.Message): The message object containing the command.
+    """
+
+    wishlist.reset_wishlist()
+    bot.reply_to(message, text="Resetting the wishlist")
 
 
 bot.infinity_polling()

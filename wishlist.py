@@ -61,7 +61,7 @@ def remove_product_from_wishlist(name: str) -> None:
                 writer.writerow(line)
 
 
-def remove_wishlist_file() -> None:
+def reset_wishlist() -> None:
     """
     Remove the wishlist file.
 
