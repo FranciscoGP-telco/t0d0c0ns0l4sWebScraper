@@ -20,8 +20,8 @@ def compare_csv(previous_file: str, current_file: str) -> Dict[str, Any]:
         Dict[str, Any]: A dictionary containing the differences between the two CSV files.
     """
     return compare(
-        load_csv(open(previous_file, encoding="utf-8"), key="Name"),
-        load_csv(open(current_file, encoding="utf-8"), key="Name")
+        load_csv(open(previous_file, encoding="utf-8"), key="name"),
+        load_csv(open(current_file, encoding="utf-8"), key="name")
     )
 
 
@@ -36,7 +36,7 @@ def get_added_products(previous_file: str = "previous.csv",
     """
     diff = compare_csv(previous_file, current_file)
     for difference in diff['added']:
-        name = difference['Name']
+        name = difference['name']
         print(f'+ {name}')
 
 
@@ -51,7 +51,7 @@ def get_removed_products(previous_file: str = "previous.csv",
     """
     diff = compare_csv(previous_file, current_file)
     for difference in diff['removed']:
-        name = difference['Name']
+        name = difference['name']
         print(f'- {name}')
 
 

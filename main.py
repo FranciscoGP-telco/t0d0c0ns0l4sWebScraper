@@ -82,11 +82,11 @@ def page_info_to_csv() -> None:
         article_list.extend(current_articles_list)
         page_num += 1
 
-    df = pd.DataFrame(article_list, columns=["Name", "price", "URL"])
+    df = pd.DataFrame(article_list, columns=["name", "price", "URL"])
     if df.empty:
         logging.error("No articles found.")
         return
-    df[["type", "Name"]] = df["Name"].str.split(n=1, expand=True)
+    df[["type", "name"]] = df["name"].str.split(n=1, expand=True)
     df["price"] = df["price"].str.extract(r"(\d+,\d{2})")
     df["price"] = df["price"].str.replace(",", ".")
     df["price"] = df["price"].astype(float)
